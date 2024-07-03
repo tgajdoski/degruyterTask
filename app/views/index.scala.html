@@ -1,0 +1,43 @@
+@import api.book.BookResource
+@import java.time.LocalDate
+@import java.time.format.DateTimeFormatter
+
+@(books: Iterable[BookResource])
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>De Gruyter Interview task</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+    </head>
+    <body >
+        <h2 class="text-4xl mt-2 ml-6 font-extrabold dark:text-white">List of Books</h2>
+
+        <table class="mt-6 ml-6 border-collapse border border-spacing-2 border-slate-400">
+            <thead>
+                <tr>
+                    <th class="border border-slate-300 p-2">ID</th>
+                    <th class="border border-slate-300 p-2">Title</th>
+                    <th class="border border-slate-300 p-2">SubTitle</th>
+                    <th class="border border-slate-300 p-2">ISBN</th>
+                    <th class="border border-slate-300 p-2">Published</th>
+                    <th class="border border-slate-300 p-2">Author</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @for(book <- books) {
+                    <tr>
+                        <td class="border border-slate-300 p-2">@book.id</td>
+                        <td class="border border-slate-300 p-2">@book.title</td>
+                        <td class="border border-slate-300 p-2">@book.subtitle</td>
+                        <td class="border border-slate-300 p-2">@book.ISBN</td>
+                        <td class="border border-slate-300 p-2">@LocalDate.parse(book.published.split(" ")(0)).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))</td>
+                        <td class="border border-slate-300 p-2">@book.author.name</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </body>
+</html>
